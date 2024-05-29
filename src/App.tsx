@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Dropdown, DropdownOption } from './components/dropdown'
 
@@ -16,17 +14,19 @@ const screensavers: DropdownOption[] = [
 ]
 
 function App() {
-  const [currentScreensaver, setCurrentScreensaver] = useState(screensavers)
-
-  function handleOptionSelected(selectedScreensaver: DropdownOption) {
-    console.log('SELETED', selectedScreensaver)
-  }
+  const [currentScreensaver, setCurrentScreensaver] = useState(screensavers[0])
 
   return (
     <>
       <div>
         Pick a screensaver and wait!
-        <Dropdown options={screensavers} onOptionSelected={handleOptionSelected} />
+        <Dropdown options={screensavers} onOptionSelected={setCurrentScreensaver} />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        current screensaver {currentScreensaver.displayText}
       </div>
     </>
   )
