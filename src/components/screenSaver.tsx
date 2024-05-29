@@ -1,13 +1,22 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import './screenSaver.css'
+import "./screenSaver.css";
+import { DVDScreenSaver } from "./screenSavers/DVD";
 
-const eventsToListen = ['mousemove', 'keydown']
+const eventsToListen = ["mousemove", "keydown"];
 
-export function ScreenSaver({ children, delayBeforeScreenSaver = 5000 }: { children: ReactNode, delayBeforeScreenSaver: number }) {
-  const [screenSaverOn, setScreenSaverOn] = useState(false)
+export function ScreenSaver({
+  children,
+  delayBeforeScreenSaver = 5000,
+  screenSaverComponent = DVDScreenSaver,
+}: {
+  children: ReactNode;
+  delayBeforeScreenSaver: number;
+  screenSaverComponent: () => ReactNode;
+}) {
+  const [screenSaverOn, setScreenSaverOn] = useState(false);
   const timerRef = useRef<any>(null);
 
-  function resetTimer()  {
+  function resetTimer() {
     setScreenSaverOn(false);
 
     if (timerRef.current) {
@@ -17,41 +26,43 @@ export function ScreenSaver({ children, delayBeforeScreenSaver = 5000 }: { child
     timerRef.current = setTimeout(() => {
       setScreenSaverOn(true);
     }, delayBeforeScreenSaver);
-  };
+  }
 
   useEffect(() => {
-    console.log("USE EFFECT RUN")
+    console.log("USE EFFECT RUN");
 
-    subscribeToUserEvents(eventsToListen, (event) => {
-      console.log("FIRED", event)
-      resetTimer()
-    })
+    subscribeToUserEvents(eventsToListen, resetTimer);
 
     return () => {
-      console.log("USE EFFECT CLEAN")
-      unsubscribeToUserEvents(eventsToListen, () => resetTimer())
+      console.log("USE EFFECT CLEAN");
+      unsubscribeToUserEvents(eventsToListen, resetTimer);
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
+  
   return (
-    <div className={screenSaverOn ? 'full-screen' : ''}>
-      <button onClick={() => setScreenSaverOn(!screenSaverOn)}>SWITCH</button>
-      {!screenSaverOn && children}
+    <div className={screenSaverOn ? "full-screen" : ""}>
+      {screenSaverOn ? screenSaverComponent() : children}
     </div>
-    
-  )
+  );
 }
 
-function subscribeToUserEvents(events: string[], onEvenTriggerCallback: (eventName: string) => void) {
+function subscribeToUserEvents(
+  events: string[],
+  onEvenTriggerCallback: (eventName: string) => void
+) {
   for (const event of events) {
-    window.addEventListener(event, () => onEvenTriggerCallback(event))
+    window.addEventListener(event, () => onEvenTriggerCallback(event));
   }
 }
 
-function unsubscribeToUserEvents(events: string[], onEvenTriggerCallback: (eventName: string) => void) {
+function unsubscribeToUserEvents(
+  events: string[],
+  onEvenTriggerCallback: (eventName: string) => void
+) {
   for (const event of events) {
-    window.removeEventListener(event, () => onEvenTriggerCallback(event))
+    window.removeEventListener(event, () => onEvenTriggerCallback(event));
   }
 }
