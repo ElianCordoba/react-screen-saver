@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { ScreenSaver } from "../components/screenSaver.tsx";
+import { ScreenSaver } from "../components/ScreenSaverOverlay.tsx";
 import { useScreenSaver } from "../hooks/useScreensaver.tsx";
 
 function App() {
-  console.log("RERENDERING");
   const [currentScreensaver, setCurrentScreensaver, allScreenSavers] =
     useScreenSaver();
 

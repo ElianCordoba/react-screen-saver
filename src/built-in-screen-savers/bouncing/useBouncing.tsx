@@ -6,7 +6,8 @@ interface BouncingOptions {
 const _defaultOptions: BouncingOptions = {
   speed: 5,
 };
-export function useBouning<T extends HTMLDivElement = HTMLDivElement>({
+
+export function useBouning<T extends HTMLDivElement>({
   options,
 }: {
   options?: BouncingOptions;
@@ -23,6 +24,7 @@ export function useBouning<T extends HTMLDivElement = HTMLDivElement>({
     ...getInitialRandomState(),
   });
 
+  // Starts the animation loop, calling itself recursively so that the animation doesn't stop
   function animationStep() {
     if (elementRef.current?.parentElement) {
       const containerHeight = elementRef.current.parentElement.clientHeight;

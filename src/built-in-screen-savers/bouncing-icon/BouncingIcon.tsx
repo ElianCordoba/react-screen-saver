@@ -1,9 +1,9 @@
-import { DVDScreenSaver } from "../bouncing/bouncing";
+import { BouncingScreenSaver } from "../bouncing/bouncing";
 
 export function BouncingIconScreenSaver() {
   return (
-    <DVDScreenSaver>
+    <BouncingScreenSaver>
       <h1 style={{ fontSize: "25px" }}>⚛️</h1>
-    </DVDScreenSaver>
+    </BouncingScreenSaver>
   );
 }

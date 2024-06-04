@@ -11,7 +11,7 @@ export const CurrentScreenSaverContext = createContext(
 );
 export const SetScreenSaverContext = createContext<any>(null);
 
-export function ScreenSaverProvider({ children }: any) {
+export function ScreenSaverProvider({ children }: { children: JSX.Element }) {
   const [currentSreenSaver, setCurrentSreenSaver] = useState(
     AVAILABLE_SCREENSAVERS.BouncingIcon
   );

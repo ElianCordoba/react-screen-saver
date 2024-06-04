@@ -1,6 +1,7 @@
 import { useBouning } from "./useBouncing";
 
-export function DVDScreenSaver({ children }: { children: JSX.Element }) {
+// If you import this component you can make your own element bounce around
+export function BouncingScreenSaver({ children }: { children: JSX.Element }) {
   const { elementRef } = useBouning({});
 
   return (

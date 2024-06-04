@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { AVAILABLE_SCREENSAVERS, ScreenSaverProvider } from "../Context";
-import "./screenSaver.css";
+import "./ScreenSaverOverlay.css";
 import { useScreenSaver } from "../hooks/useScreensaver";
 import { BouncingIconScreenSaver } from "../built-in-screen-savers/bouncing-icon/BouncingIcon";
 import { BouncingTextScreenSaver } from "../built-in-screen-savers/bouncing-text/BouncingText";
@@ -18,7 +18,7 @@ export function ScreenSaver({
   const [currentScreenSaver] = useScreenSaver();
   const screenSaverComponent = getSreenSaverComponent(currentScreenSaver);
   const [screenSaverOn, setScreenSaverOn] = useState(false);
-  const timerRef = useRef<any>(null);
+  const timerRef = useRef(0);
 
   function resetTimer() {
     setScreenSaverOn(false);
@@ -27,10 +27,7 @@ export function ScreenSaver({
       clearTimeout(timerRef.current);
     }
 
-    timerRef.current = setTimeout(
-      () => setScreenSaverOn(true),
-      delayBeforeScreenSaver
-    );
+    timerRef.current = setTimeout(() => setScreenSaverOn(true), delayBeforeScreenSaver);
   }
 
   useEffect(() => {
@@ -77,6 +74,6 @@ function getSreenSaverComponent(currentScreenSaver: AVAILABLE_SCREENSAVERS) {
     case AVAILABLE_SCREENSAVERS.MacOS:
       return MacOSScreenSaver;
     default:
-      throw new Error("Unknown option" + currentScreenSaver);
+      throw new Error(`Unknown option ${currentScreenSaver}`);
   }
 }
