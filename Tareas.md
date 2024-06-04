@@ -1,0 +1,4 @@
+- Hacerlo andar
+- Refactorizarlo para que uses un custom hook y la api sea mas simple
+- Agregar otro ejemplo de screen saver, como loaders de updates de sistemas operativos o alguno inspirado en winamp
+- Publicarlo en npm / jsr
